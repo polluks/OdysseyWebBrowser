@@ -633,7 +633,7 @@
 #define HAVE_STAT_BIRTHTIME 1
 #endif
 
-#if !OS(WINDOWS) && !OS(SOLARIS)
+#if !OS(WINDOWS) && !OS(SOLARIS) && !OS(AROS) && !OS(MORPHOS)
 #define HAVE_TM_GMTOFF 1
 #define HAVE_TM_ZONE 1
 #define HAVE_TIMEGM 1
