@@ -432,7 +432,7 @@ Vector<String> listDirectory(const String& path, const String& filter)
     return entries;
   }
 #else
-Vector<String> listDirectory(const String& path, const String& filter)
+Vector<String> listDirectory(const String& path, const String&)
 {
     Vector<String> entries;
 

@@ -138,9 +138,11 @@ static CString certificatePath()
     return CString();
 }
 
-#if OS(MORPHOS)
 static char* cookieJarPath()
 {
+#if OS(MORPHOS)
+    return NULL;
+#endif
     char* cookieJarPath = getenv("CURL_COOKIE_JAR_PATH");
     if (cookieJarPath)
         return fastStrDup(cookieJarPath);
@@ -170,7 +172,6 @@ static char* cookieJarPath()
     return fastStrDup("cookies.dat");
 #endif
 }
-#endif
 
 static Mutex* sharedResourceMutex(curl_lock_data data) {
     DEPRECATED_DEFINE_STATIC_LOCAL(Mutex, cookieMutex, ());
@@ -256,11 +257,7 @@ inline static bool isHttpNotModified(int statusCode)
 
 ResourceHandleManager::ResourceHandleManager()
     : m_downloadTimer(*this, &ResourceHandleManager::downloadTimerCallback)
-#if OS(MORPHOS)
-	, m_cookieJarFileName(0)
-#else
     , m_cookieJarFileName(cookieJarPath())
-#endif
     , m_certificatePath (certificatePath())
     , m_runningJobs(0)
 #ifndef NDEBUG
@@ -379,7 +376,7 @@ static void handleLocalReceiveResponse (CURL* handle, ResourceHandle* job, Resou
 
 
 // called with data after all headers have been processed via headerCallback
-static size_t writeCallback_void(void* ptr, size_t size, size_t nmemb, void* data)
+static size_t writeCallback_void(void* , size_t , size_t , void*)
 {
     return 0;
 }
@@ -548,7 +545,7 @@ static bool getProtectionSpace(CURL* h, const ResourceResponse& response, Protec
  * update the ResourceResponse and then send it away.
  *
  */
-static size_t headerCallback_void(char* ptr, size_t size, size_t nmemb, void* data)
+static size_t headerCallback_void(char* , size_t , size_t , void*)
 {
     return 0;
 }
@@ -772,7 +769,7 @@ static size_t headerCallback(char* ptr, size_t size, size_t nmemb, void* data)
     return totalSize;
 }
 
-int seekCallback(void* instream, curl_off_t offset, int origin)
+int seekCallback(void*, curl_off_t, int)
 {
     return CURL_SEEKFUNC_OK;
 }
