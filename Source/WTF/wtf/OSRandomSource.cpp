@@ -58,9 +58,6 @@ NEVER_INLINE NO_RETURN_DUE_TO_CRASH static void crashUnableToReadFromURandom()
     
 void cryptographicallyRandomValuesFromOS(unsigned char* buffer, size_t length)
 {
-#if defined(__AROS__)
-    return;
-#endif
 #if OS(UNIX)
     int fd = open("/dev/urandom", O_RDONLY, 0);
     if (fd < 0)
