@@ -223,9 +223,9 @@ set(WTF_LIBRARIES
 )
 
 # FIXME: Port bmalloc to Windows. https://bugs.webkit.org/show_bug.cgi?id=143310
-if (NOT WIN32)
-    list(APPEND WTF_LIBRARIES bmalloc)
-endif ()
+# if (NOT WIN32)
+#     list(APPEND WTF_LIBRARIES bmalloc)
+# endif ()
 
 list(APPEND WTF_SOURCES
     unicode/icu/CollatorICU.cpp
@@ -243,12 +243,6 @@ if (WIN32)
         OSAllocatorWin.cpp
         ThreadSpecificWin.cpp
         ThreadingWin.cpp
-    )
-else ()
-    list(APPEND WTF_SOURCES
-        OSAllocatorAROS.cpp
-        ThreadSpecificMorphOS.cpp
-        ThreadingMorphOS.cpp
     )
 endif ()
 
