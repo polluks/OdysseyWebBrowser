@@ -18,7 +18,6 @@ set(OdysseyWebBrowser_LIBRARIES
     -lpixman
     -lfontconfig
     -lfreetype2
-    -liconv
     -lxml2
     -lz
     -lcurl
@@ -37,6 +36,7 @@ set(OdysseyWebBrowser_LIBRARIES
     -lavformat
     -lbz2
     -lavcodec
+    -liconv
     -lz
     -lavutil
     -lswresample

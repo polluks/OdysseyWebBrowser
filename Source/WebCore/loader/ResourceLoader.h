@@ -150,7 +150,6 @@ public:
 #if PLATFORM(MUI)
     void setHandle(PassRefPtr<ResourceHandle> handle)
     {
-        m_handle = 0;
         m_handle = handle;
     }
 #endif

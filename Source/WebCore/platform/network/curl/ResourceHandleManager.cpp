@@ -683,7 +683,7 @@ static size_t headerCallback(char* ptr, size_t size, size_t nmemb, void* data)
 	    newHandle->getInternal()->m_shouldIncludeExpectHeader = false;
 	    newHandle->getInternal()->m_disableEncoding = d->m_disableEncoding;
 	    
-	    job->setClient(0); // Clear the client to avoid it being cleared by WebCore.
+	    job->clearClient(); // Clear the client to avoid it being cleared by WebCore.
 	    
 	    if(client)
 	    {
@@ -1473,10 +1473,6 @@ void ResourceHandleManager::initializeHandle(ResourceHandle* job)
         curl_easy_setopt(d->m_handle, CURLOPT_PROXY, m_proxy.utf8().data());
         curl_easy_setopt(d->m_handle, CURLOPT_PROXYTYPE, m_proxyType);
     }
-#if ENABLE(WEB_TIMING)
-    curl_easy_setopt(d->m_handle, CURLOPT_SOCKOPTFUNCTION, sockoptfunction);
-    curl_easy_setopt(d->m_handle, CURLOPT_SOCKOPTDATA, job);
-#endif
 #if PLATFORM(MUI)
     // And finally send cookies
     job->checkAndSendCookies(url);

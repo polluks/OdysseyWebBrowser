@@ -164,7 +164,7 @@ void WebFrameLoaderClient::dispatchDidReceiveAuthenticationChallenge(DocumentLoa
 {
     ASSERT(challenge.authenticationClient());
 
-    Credential storedCredential = CredentialStorage::get(challenge.protectionSpace());
+    Credential storedCredential = CredentialStorage::defaultCredentialStorage().get(challenge.protectionSpace());
     if(!storedCredential.isEmpty())
     {
 	challenge.authenticationClient()->receivedCredential(challenge, storedCredential);
@@ -639,13 +639,17 @@ void WebFrameLoaderClient::didDetectXSS(const URL&, bool)
     // FIXME: propagate call into the private delegate
 }
 
-PassRefPtr<DocumentLoader> WebFrameLoaderClient::createDocumentLoader(const ResourceRequest& request, const SubstituteData& substituteData)
+Ref<DocumentLoader> WebFrameLoaderClient::createDocumentLoader(const ResourceRequest& request, const SubstituteData& substituteData)
 {
-    RefPtr<WebDocumentLoader> loader = WebDocumentLoader::create(request, substituteData);
+    Ref<WebDocumentLoader> loader = WebDocumentLoader::create(request, substituteData);
 
-    WebDataSource* dataSource = WebDataSource::createInstance(loader.get());
+    WebDataSource* dataSource = WebDataSource::createInstance(loader.ptr());
     loader->setDataSource(dataSource);
-    return loader.release();
+    return WTF::move(loader);
+}
+
+void WebFrameLoaderClient::updateCachedDocumentLoader(WebCore::DocumentLoader&)
+{
 }
 
 void WebFrameLoaderClient::setTitle(const WebCore::StringWithDirection& title, const URL& url)
@@ -726,13 +730,13 @@ bool WebFrameLoaderClient::canCachePage() const
     return true;
 }
 
-PassRefPtr<Frame> WebFrameLoaderClient::createFrame(const URL& url, const String& name, HTMLFrameOwnerElement* ownerElement, const String& referrer, bool /*allowsScrolling*/, int /*marginWidth*/, int /*marginHeight*/)
+RefPtr<Frame> WebFrameLoaderClient::createFrame(const URL& url, const String& name, HTMLFrameOwnerElement* ownerElement, const String& referrer, bool /*allowsScrolling*/, int /*marginWidth*/, int /*marginHeight*/)
 {
     RefPtr<Frame> result = createFrame(url, name, ownerElement, referrer);
     if (!result)
         return 0;
 
-    return result.release();
+    return result;
 }
 
 PassRefPtr<Frame> WebFrameLoaderClient::createFrame(const URL& url, const String& name, HTMLFrameOwnerElement* ownerElement, const String& referrer)
@@ -770,10 +774,10 @@ PassRefPtr<Frame> WebFrameLoaderClient::createFrame(const URL& url, const String
     return childFrame.release();
 }
 
-PassRefPtr<Widget> WebFrameLoaderClient::createPlugin(const IntSize& pluginSize, HTMLPlugInElement* element, const URL& url, const Vector<String>& paramNames, const Vector<String>& paramValues, const String& mimeType, bool loadManually)
+RefPtr<Widget> WebFrameLoaderClient::createPlugin(const IntSize& pluginSize, HTMLPlugInElement* element, const URL& url, const Vector<String>& paramNames, const Vector<String>& paramValues, const String& mimeType, bool loadManually)
 {
     Frame* frame = core(m_webFrame);
-    PassRefPtr<PluginView> pluginView = PluginView::create(frame, pluginSize, element, url, paramNames, paramValues, mimeType, loadManually);
+    RefPtr<PluginView> pluginView = PluginView::create(frame, pluginSize, element, url, paramNames, paramValues, mimeType, loadManually);
 
     if (pluginView->status() == PluginStatusLoadedSuccessfully)
         return pluginView;

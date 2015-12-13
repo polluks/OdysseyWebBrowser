@@ -72,6 +72,7 @@ public:
 
     bool shouldInsertNode(WebCore::Node*, WebCore::Range* replacingRange, WebCore::EditorInsertAction);
     bool shouldApplyStyle(WebCore::StyleProperties*, WebCore::Range*);
+    void didApplyStyle() override;
     bool shouldMoveRangeAfterDelete(WebCore::Range*, WebCore::Range*);
     bool shouldChangeTypingStyle(WebCore::StyleProperties* currentStyle, WebCore::StyleProperties* toProposedStyle);
 

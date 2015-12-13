@@ -340,9 +340,9 @@ void WebFrame::loadURL(const char* url)
     if (isAbsolute(url)) {
         string u = "file://";
         u += url;
-        coreFrame->loader().load(FrameLoadRequest(coreFrame, ResourceRequest(URL(URL(), String::fromUTF8(u.c_str())))));
+        coreFrame->loader().load(FrameLoadRequest(coreFrame, ResourceRequest(URL(URL(), String::fromUTF8(u.c_str()))), ShouldOpenExternalURLsPolicy::ShouldNotAllow));
     } else
-        coreFrame->loader().load(FrameLoadRequest(coreFrame, ResourceRequest(URL(URL(), String::fromUTF8(url)))));
+        coreFrame->loader().load(FrameLoadRequest(coreFrame, ResourceRequest(URL(URL(), String::fromUTF8(url))), ShouldOpenExternalURLsPolicy::ShouldNotAllow));
 }
 
 JSGlobalContextRef WebFrame::contextForScriptWorld(WebScriptWorld* world)
@@ -360,7 +360,7 @@ void WebFrame::loadRequest(WebMutableURLRequest* request)
     if (!coreFrame)
         return;
 
-    coreFrame->loader().load(FrameLoadRequest(coreFrame, request->resourceRequest()));
+    coreFrame->loader().load(FrameLoadRequest(coreFrame, request->resourceRequest(), ShouldOpenExternalURLsPolicy::ShouldNotAllow));
 }
 
 void WebFrame::loadHTMLString(const char* string, const char* baseURL, const char* unreachableURL)
@@ -377,7 +377,7 @@ void WebFrame::loadHTMLString(const char* string, const char* baseURL, const cha
     SubstituteData substituteData(data.release(), failingURL, response, SubstituteData::SessionHistoryVisibility::Hidden);
 
     if (Frame* coreFrame = core(this))
-        coreFrame->loader().load(FrameLoadRequest(coreFrame, request, substituteData));
+        coreFrame->loader().load(FrameLoadRequest(coreFrame, request, ShouldOpenExternalURLsPolicy::ShouldNotAllow, substituteData));
 }
 
 void WebFrame::loadHTMLString(const char* string, const char* baseURL)

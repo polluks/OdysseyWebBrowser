@@ -49,8 +49,7 @@ Icon::Icon()
 
 Icon::~Icon()
 {
-    m_icon.clear();
-    m_icon = 0;
+    m_icon = nullptr;
 }
 
 

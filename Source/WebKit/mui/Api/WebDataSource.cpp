@@ -56,7 +56,7 @@ WebDataSource::~WebDataSource()
 {
     if (m_loader)
         m_loader->detachDataSource();
-    m_loader = 0;
+    m_loader = nullptr;
 }
 
 WebDataSource* WebDataSource::createInstance(WebDocumentLoader* loader)

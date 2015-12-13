@@ -470,6 +470,7 @@ Vector<String> listDirectory(const String& path, const String&)
 
     return entries;
 }
+#endif
 
 void revealFolderInOS(const String& path)
 {

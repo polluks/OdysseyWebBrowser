@@ -220,6 +220,7 @@ list(APPEND WebKit_SOURCES
     mui/Plugins/PluginDatabase.cpp
     mui/Plugins/PluginDatabaseMUI.cpp
     mui/Plugins/PluginDataMorphOS.cpp
+    mui/Plugins/PluginMainThreadScheduler.cpp
     mui/Plugins/PluginPackage.cpp
     mui/Plugins/PluginPackageMorphOS.cpp
     mui/Plugins/PluginStream.cpp

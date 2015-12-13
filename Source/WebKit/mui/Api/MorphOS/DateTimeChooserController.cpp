@@ -68,7 +68,7 @@ void DateTimeChooserController::didChooseValue(const String& value)
 void DateTimeChooserController::didEndChooser()
 {
     ASSERT(m_client);
-    m_chooser.clear();
+    m_chooser = nullptr;
     m_client->didEndChooser();
 }
 

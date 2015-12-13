@@ -1197,7 +1197,7 @@ bool WebViewPrivate::onKeyDown(BalEventKey event)
 
 				kprintf("\nPruning caches and running Garbage collector.\n");
 				
-				MemoryPressureHandler::singleton().releaseMemory(true);
+				MemoryPressureHandler::singleton().releaseMemory(Critical::Yes, Synchronous::Yes);
 
 				if(getenv("OWB_RESETVM"))
 				{
@@ -1360,7 +1360,10 @@ bool WebViewPrivate::onMouseButtonUp(BalEventButton event)
 						break;
 				}
 
-				if (Page* newPage = oldPage->chrome().createWindow(frame,  FrameLoadRequest(frame, ResourceRequest(urlToLoad, frame->loader().outgoingReferrer())), features, NavigationAction()))
+				if (Page* newPage = oldPage->chrome().createWindow(
+				        frame,
+				        FrameLoadRequest(frame, ResourceRequest(urlToLoad, frame->loader().outgoingReferrer()), ShouldOpenExternalURLsPolicy::ShouldNotAllow),
+				        features, NavigationAction()))
 		            newPage->chrome().show();
 		    }
 

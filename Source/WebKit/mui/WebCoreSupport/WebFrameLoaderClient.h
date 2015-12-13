@@ -175,7 +175,8 @@ public:
     virtual void didFinishLoad();
     virtual void prepareForDataSourceReplacement();
 
-    virtual PassRefPtr<WebCore::DocumentLoader> createDocumentLoader(const WebCore::ResourceRequest&, const WebCore::SubstituteData&);
+    virtual Ref<WebCore::DocumentLoader> createDocumentLoader(const WebCore::ResourceRequest&, const WebCore::SubstituteData&);
+    virtual void updateCachedDocumentLoader(WebCore::DocumentLoader&) override;
     virtual void setTitle(const WebCore::StringWithDirection& title, const WebCore::URL&);
 
     virtual WTF::String userAgent(const WebCore::URL&);
@@ -193,9 +194,9 @@ public:
     virtual bool canCachePage() const;
     virtual void convertMainResourceLoadToDownload(WebCore::DocumentLoader*, const WebCore::ResourceRequest&, const WebCore::ResourceResponse&);
 
-    virtual PassRefPtr<WebCore::Frame> createFrame(const WebCore::URL& url, const WTF::String& name, WebCore::HTMLFrameOwnerElement* ownerElement,
+    virtual RefPtr<WebCore::Frame> createFrame(const WebCore::URL& url, const WTF::String& name, WebCore::HTMLFrameOwnerElement* ownerElement,
     const WTF::String& referrer, bool allowsScrolling, int marginWidth, int marginHeight);
-    virtual PassRefPtr<WebCore::Widget> createPlugin(const WebCore::IntSize&, WebCore::HTMLPlugInElement*, const WebCore::URL&, const Vector<WTF::String>&, const Vector<WTF::String>&, const WTF::String&, bool loadManually);
+    virtual RefPtr<WebCore::Widget> createPlugin(const WebCore::IntSize&, WebCore::HTMLPlugInElement*, const WebCore::URL&, const Vector<WTF::String>&, const Vector<WTF::String>&, const WTF::String&, bool loadManually);
     virtual void recreatePlugin(WebCore::Widget*) { }
     virtual void redirectDataToPlugin(WebCore::Widget* pluginWidget);
     virtual PassRefPtr<WebCore::Widget> createJavaAppletWidget(const WebCore::IntSize&, WebCore::HTMLAppletElement*, const WebCore::URL& baseURL, const Vector<WTF::String>& paramNames, const Vector<WTF::String>& paramValues);

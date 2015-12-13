@@ -117,7 +117,7 @@ void PluginStream::stop()
 
     if (m_loader) {
         m_loader->cancel();
-        m_loader = 0;
+        m_loader = nullptr;
     }
 
     m_client = 0;
@@ -398,7 +398,7 @@ void PluginStream::sendJavaScriptStream(const URL& requestURL, const CString& re
             return;
     }
 
-    m_loader = 0;
+    m_loader = nullptr;
 
     destroyStream(resultString.isNull() ? NPRES_NETWORK_ERR : NPRES_DONE);
 }
@@ -451,7 +451,7 @@ void PluginStream::didFail(NetscapePlugInStreamLoader* loader, const ResourceErr
 
     destroyStream(NPRES_NETWORK_ERR);
 
-    m_loader = 0;
+    m_loader = nullptr;
 }
 
 void PluginStream::didFinishLoading(NetscapePlugInStreamLoader* loader)
@@ -464,7 +464,7 @@ void PluginStream::didFinishLoading(NetscapePlugInStreamLoader* loader)
 
     destroyStream(NPRES_DONE);
 
-    m_loader = 0;
+    m_loader = nullptr;
 }
 
 bool PluginStream::wantsAllStreams() const

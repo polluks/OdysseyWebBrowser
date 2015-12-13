@@ -32,52 +32,29 @@ namespace WebCore {
 
 class ScrollbarThemeBal : public ScrollbarThemeComposite {
 public:
-    ScrollbarThemeBal() 
-      {
-	/*
-	if(!m_loaded)
-	  {
-	    up = Image::loadPlatformResource("ScrollbarTheme/up");
-	    down = Image::loadPlatformResource("ScrollbarTheme/down");
-	    left = Image::loadPlatformResource("ScrollbarTheme/left");
-	    right = Image::loadPlatformResource("ScrollbarTheme/right");
-	    thumbH = Image::loadPlatformResource("ScrollbarTheme/thumbH");
-	    thumbHL = Image::loadPlatformResource("ScrollbarTheme/thumbHL");
-	    thumbHR = Image::loadPlatformResource("ScrollbarTheme/thumbHR");
-	    thumbV = Image::loadPlatformResource("ScrollbarTheme/thumbV");
-	    thumbVU = Image::loadPlatformResource("ScrollbarTheme/thumbVU");
-	    thumbVD = Image::loadPlatformResource("ScrollbarTheme/thumbVD");
-	    bg = Image::loadPlatformResource("ScrollbarTheme/bg");
-	    bgh = Image::loadPlatformResource("ScrollbarTheme/bgh");
-
-	    m_loaded = true;
-	
-	  }
-	*/
-      };
+    ScrollbarThemeBal() {};
     virtual ~ScrollbarThemeBal();
 
-    virtual int scrollbarThickness(ScrollbarControlSize = RegularScrollbar);
+    virtual int scrollbarThickness(ScrollbarControlSize = RegularScrollbar) override;
 
-    virtual void themeChanged();
+    virtual void themeChanged() override;
     
-    virtual bool invalidateOnMouseEnterExit();
-    
-protected:
-    virtual bool hasButtons(ScrollbarThemeClient*) { return true; }
-    virtual bool hasThumb(ScrollbarThemeClient*);
+    virtual bool invalidateOnMouseEnterExit() override;
 
-    virtual IntRect backButtonRect(ScrollbarThemeClient*, ScrollbarPart, bool painting = false);
-    virtual IntRect forwardButtonRect(ScrollbarThemeClient*, ScrollbarPart, bool painting = false);
-    virtual IntRect trackRect(ScrollbarThemeClient*, bool painting = false);
+    virtual bool hasButtons(Scrollbar&) override { return true; }
+    virtual bool hasThumb(Scrollbar&) override;
 
-    virtual bool shouldCenterOnThumb(ScrollbarThemeClient*, const PlatformMouseEvent&);
-    virtual bool shouldSnapBackToDragOrigin(ScrollbarThemeClient*, const PlatformMouseEvent&);
+    virtual IntRect backButtonRect(Scrollbar&, ScrollbarPart, bool painting = false) override;
+    virtual IntRect forwardButtonRect(Scrollbar&, ScrollbarPart, bool painting = false) override;
+    virtual IntRect trackRect(Scrollbar&, bool painting = false) override;
 
-    virtual void paintTrackBackground(GraphicsContext*, ScrollbarThemeClient*, const IntRect&);
-    virtual void paintTrackPiece(GraphicsContext*, ScrollbarThemeClient*, const IntRect&, ScrollbarPart);
-    virtual void paintButton(GraphicsContext*, ScrollbarThemeClient*, const IntRect&, ScrollbarPart);
-    virtual void paintThumb(GraphicsContext*, ScrollbarThemeClient*, const IntRect&);
+    virtual bool shouldCenterOnThumb(Scrollbar&, const PlatformMouseEvent&) override;
+    virtual bool shouldSnapBackToDragOrigin(Scrollbar&, const PlatformMouseEvent&) override;
+
+    virtual void paintTrackBackground(GraphicsContext&, Scrollbar&, const IntRect&) override;
+    virtual void paintTrackPiece(GraphicsContext&, Scrollbar&, const IntRect&, ScrollbarPart) override;
+    virtual void paintButton(GraphicsContext&, Scrollbar&, const IntRect&, ScrollbarPart) override;
+    virtual void paintThumb(GraphicsContext&, Scrollbar&, const IntRect&) override;
 
 private:
     static bool m_loaded;

@@ -378,6 +378,11 @@ bool WebEditorClient::shouldApplyStyle(StyleProperties* style, Range* toElements
     return true;
 }
 
+void WebEditorClient::didApplyStyle()
+{
+    notImplemented();
+}
+
 bool WebEditorClient::shouldMoveRangeAfterDelete(Range* /*range*/, Range* /*rangeToBeReplaced*/)
 { 
     notImplemented(); return true; 

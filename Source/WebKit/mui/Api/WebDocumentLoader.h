@@ -50,7 +50,7 @@ public:
      * @param[in]: Resource Request
      * @param[in]: Substitute Data
      */
-    static PassRefPtr<WebDocumentLoader> create(const WebCore::ResourceRequest&, const WebCore::SubstituteData&);
+    static Ref<WebDocumentLoader> create(const WebCore::ResourceRequest&, const WebCore::SubstituteData&);
 
     /**
      * WebDocumentLoader destructor

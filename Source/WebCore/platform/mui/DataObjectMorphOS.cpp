@@ -50,14 +50,14 @@ String DataObjectMorphOS::markup() const
 
 void DataObjectMorphOS::setText(const String& newText)
 {
-    m_range = 0;
+    m_range = nullptr;
     m_text = newText;
     replaceNonBreakingSpaceWithSpace(m_text);
 }
 
 void DataObjectMorphOS::setMarkup(const String& newMarkup)
 {
-    m_range = 0;
+    m_range = nullptr;
     m_markup = newMarkup;
 }
 
@@ -120,13 +120,13 @@ void DataObjectMorphOS::setURL(const URL& url, const String& label)
 
 void DataObjectMorphOS::clearText()
 {
-    m_range = 0;
+    m_range = nullptr;
     m_text = "";
 }
 
 void DataObjectMorphOS::clearMarkup()
 {
-    m_range = 0;
+    m_range = nullptr;
     m_markup = "";
 }
 
@@ -147,8 +147,8 @@ void DataObjectMorphOS::clearAllExceptFilenames()
     m_markup = "";
     m_uriList = "";
     m_url = URL();
-    m_image = 0;
-    m_range = 0;
+    m_image = nullptr;
+    m_range = nullptr;
 }
 
 void DataObjectMorphOS::clearAll()

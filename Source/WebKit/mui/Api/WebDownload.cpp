@@ -264,7 +264,7 @@ void DownloadClient::didFail(ResourceHandle*, const ResourceError& resourceError
     WebDownloadPrivate* priv = m_download->getWebDownloadPrivate();
     priv->state = WEBKIT_WEB_DOWNLOAD_STATE_ERROR;
 
-    priv->resourceHandle->setClient(0);
+    priv->resourceHandle->clearClient();
     priv->resourceHandle->cancel();
 
 	if(priv->outputChannel)
@@ -327,7 +327,7 @@ void WebDownload::init(const URL& url, TransferSharedPtr<WebDownloadDelegate> de
     m_priv->startOffset = 0;
     m_priv->outputChannel = NULL;
     m_priv->state = WEBKIT_WEB_DOWNLOAD_STATE_CREATED;
-    m_priv->resourceHandle = NULL;
+    m_priv->resourceHandle = nullptr;
     m_response = NULL;
     m_priv->requestUri = String(url.string());
 }
@@ -344,7 +344,7 @@ void WebDownload::init(const URL& url, const String& originURL, TransferSharedPt
     m_priv->startOffset = 0;
     m_priv->outputChannel = NULL;
     m_priv->state = WEBKIT_WEB_DOWNLOAD_STATE_CREATED;
-    m_priv->resourceHandle = NULL;
+    m_priv->resourceHandle = nullptr;
     m_response = NULL;
     m_priv->requestUri = String(url.string());
     m_priv->originURL = originURL;
@@ -356,12 +356,12 @@ WebDownload::~WebDownload()
     {
         if(m_priv->state == WEBKIT_WEB_DOWNLOAD_STATE_CREATED || m_priv->state == WEBKIT_WEB_DOWNLOAD_STATE_STARTED)
         {
-            m_priv->resourceHandle->setClient(0);
+            m_priv->resourceHandle->clearClient();
             m_priv->resourceHandle->cancel();
         }
 
         m_priv->resourceHandle.release();
-        m_priv->resourceHandle = NULL;
+        m_priv->resourceHandle = nullptr;
     }
     
     if (m_priv->resourceRequest)
@@ -453,7 +453,8 @@ void WebDownload::start(bool quiet)
 
     if (m_priv->resourceHandle)
     {
-		m_priv->resourceHandle->setClient(m_priv->downloadClient);
+        kprintf("[PANIC]: %s download client not set\n", __FILE__);
+//		m_priv->resourceHandle->setClient(m_priv->downloadClient);
 		m_priv->resourceHandle->getInternal()->m_disableEncoding = (m_priv->requestUri.endsWith(".gz") || m_priv->requestUri.endsWith(".tgz")) == true; // HACK to disable on-the-fly gzip decoding
 		m_priv->downloadClient->didStart();
         m_priv->downloadClient->didReceiveResponse(m_priv->resourceHandle.get(), m_response->resourceResponse());
@@ -476,7 +477,7 @@ void WebDownload::cancel()
 
     if (m_priv->resourceHandle)
     {
-		m_priv->resourceHandle->setClient(0);
+		m_priv->resourceHandle->clearClient();
 		m_priv->resourceHandle->cancel();
     }
 

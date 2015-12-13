@@ -138,7 +138,7 @@ bool ResourceHandle::start()
 
 void ResourceHandle::cancel()
 {
-    setClient(0);
+    clearClient();
     ResourceHandleManager::sharedInstance()->cancel(this);
 }
 
@@ -256,9 +256,7 @@ String ResourceHandle::path()
 
 void ResourceHandle::resume(String path)
 {
-    ResourceHandleClient *c = client();
     cancel();
-    setClient(c);
     d->m_path = path;
     ResourceHandleManager::sharedInstance()->add(this);
 }

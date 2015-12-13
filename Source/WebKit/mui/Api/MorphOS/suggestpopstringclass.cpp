@@ -297,10 +297,10 @@ DEFDISP
 
 	if(data->resource_handle)
 	{
-		data->resource_handle->setClient(0);
+		data->resource_handle->clearClient();
 		data->resource_handle->cancel();
 		data->resource_handle.release();
-		data->resource_handle = 0;
+		data->resource_handle = nullptr;
 	}
 
 	if(data->suggest_client)
@@ -490,10 +490,10 @@ DEFTMETHOD(SuggestPopString_Abort)
 
 	if(data->resource_handle)
 	{
-		data->resource_handle->setClient(0);
+		data->resource_handle->clearClient();
 		data->resource_handle->cancel();
 		data->resource_handle.release();
-		data->resource_handle = 0;
+		data->resource_handle = nullptr;
 	}
 
 	if(data->suggest_client)
@@ -531,10 +531,10 @@ DEFTMETHOD(SuggestPopString_Initiate)
 
 			if(data->resource_handle)
 			{
-				data->resource_handle->setClient(0);
+				data->resource_handle->clearClient();
 				data->resource_handle->cancel();
 				data->resource_handle.release();
-				data->resource_handle = 0;
+				data->resource_handle = nullptr;
 			}
 
 			if(data->suggest_client)

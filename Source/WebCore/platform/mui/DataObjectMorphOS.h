@@ -51,7 +51,7 @@ public:
 	bool hasImage() const { return m_image; }
     void clearURIList() { m_uriList = ""; }
     void clearURL() { m_url = URL(); }
-    void clearImage() { m_image = 0; }
+    void clearImage() { m_image = nullptr; }
 
     String text() const;
     String markup() const;

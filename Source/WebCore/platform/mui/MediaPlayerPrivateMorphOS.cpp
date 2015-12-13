@@ -563,7 +563,7 @@ public:
 	{
 		running         = false;
 		allow_seek      = false;
-		resource_handle = 0;
+		resource_handle = nullptr;
 		stream_client   = 0;
 		transfer_completed = false;
 		network_error   = 0;
@@ -2115,7 +2115,7 @@ void MediaPlayerPrivate::didFinishLoading()
 {
 	m_ctx->transfer_completed = m_ctx->media_buffer.isComplete(m_ctx);
 	m_ctx->resource_handle.release();
-	m_ctx->resource_handle = 0;
+	m_ctx->resource_handle = nullptr;
 
 	D(kprintf("[MediaPlayer] didFinishLoading: eof %d\n", m_ctx->transfer_completed));
 
@@ -2146,7 +2146,7 @@ void MediaPlayerPrivate::didFailLoading(const ResourceError& error)
 	m_ctx->transfer_completed = false;
 	m_ctx->network_error = error.errorCode();
 	m_ctx->resource_handle.release();
-	m_ctx->resource_handle = 0;
+	m_ctx->resource_handle = nullptr;
 
 	D(kprintf("Network Error %d\n", m_ctx->network_error));
 
@@ -2219,10 +2219,10 @@ bool MediaPlayerPrivate::fetchData(unsigned long long startOffset)
 
 	if(m_ctx->resource_handle)
 	{
-		m_ctx->resource_handle->setClient(0);
+		m_ctx->resource_handle->clearClient();
 		m_ctx->resource_handle->cancel();
 		m_ctx->resource_handle.release();
-		m_ctx->resource_handle = 0;
+		m_ctx->resource_handle = nullptr;
 	}
 
 	if(m_ctx->stream_client)
@@ -2298,10 +2298,10 @@ void MediaPlayerPrivate::cancelFetch()
 {
 	if(m_ctx->resource_handle)
 	{
-		m_ctx->resource_handle->setClient(0);
+		m_ctx->resource_handle->clearClient();
 		m_ctx->resource_handle->cancel();
 		m_ctx->resource_handle.release();
-		m_ctx->resource_handle = 0;
+		m_ctx->resource_handle = nullptr;
 	}
 
 	if(m_ctx->stream_client)
@@ -3331,10 +3331,10 @@ MediaPlayerPrivate::~MediaPlayerPrivate()
 
 	if(m_ctx->resource_handle)
 	{
-		m_ctx->resource_handle->setClient(0);
+		m_ctx->resource_handle->clearClient();
 		m_ctx->resource_handle->cancel();
 		m_ctx->resource_handle.release();
-		m_ctx->resource_handle = 0;
+		m_ctx->resource_handle = nullptr;
 	}
 
 	if(m_ctx->stream_client)

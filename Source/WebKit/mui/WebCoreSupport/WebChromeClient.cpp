@@ -663,7 +663,7 @@ void WebChromeClient::exitFullScreenForElement(WebCore::Element*)
     m_fullScreenElement->document().webkitWillExitFullScreenForElement(m_fullScreenElement.get());
     m_webView->exitFullScreenForElement(m_fullScreenElement.get());
     m_fullScreenElement->document().webkitDidExitFullScreenForElement(m_fullScreenElement.get());
-    m_fullScreenElement.clear();
+    m_fullScreenElement = nullptr;
 }
 
 void WebChromeClient::fullScreenRendererChanged(RenderBox*)
@@ -688,12 +688,12 @@ bool WebChromeClient::hasOpenedPopup() const
 	return false;
 }
 
-PassRefPtr<PopupMenu> WebChromeClient::createPopupMenu(PopupMenuClient* client) const
+RefPtr<PopupMenu> WebChromeClient::createPopupMenu(PopupMenuClient* client) const
 {
     return adoptRef(new PopupMenuMorphOS(client));
 }
 
-PassRefPtr<SearchPopupMenu> WebChromeClient::createSearchPopupMenu(PopupMenuClient* client) const
+RefPtr<SearchPopupMenu> WebChromeClient::createSearchPopupMenu(PopupMenuClient* client) const
 {
     return adoptRef(new SearchPopupMenuMorphOS(client));
 }

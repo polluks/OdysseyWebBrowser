@@ -38,9 +38,9 @@ WebDocumentLoader::WebDocumentLoader(const ResourceRequest& request, const Subst
 {
 }
 
-PassRefPtr<WebDocumentLoader> WebDocumentLoader::create(const ResourceRequest& req, const SubstituteData& data)
+Ref<WebDocumentLoader> WebDocumentLoader::create(const ResourceRequest& req, const SubstituteData& data)
 {
-    return adoptRef(new WebDocumentLoader(req, data));
+    return adoptRef(*new WebDocumentLoader(req, data));
 }
 
 WebDocumentLoader::~WebDocumentLoader()
